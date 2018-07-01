@@ -59,11 +59,20 @@ def index():
 # Convert from URL to shorturl
 @app.route("/create")
 def create():
-	hostname = request.args.get('url', default=None)
-	if hostname is None:
+	print(request.args)
+	param = request.args.get('url', default=None)
+	URL = str(param)
+
+	if param is None:
 		return '<h1>Please give a url to shorturl, format is<br/> /create?url=http://your_url/</h1>'
 	else:
-		return us.ServiceHost + us.GenShortURL(hostname)
+		# Bugfix: the parameters of GET method will be split by '&'
+		# so we need to combine it together
+		for key in request.args:
+			if key != 'url':
+				URL += '&' + key + '=' +request.args[key]
+
+		return us.ServiceHost + us.GenShortURL(URL)
 
 # Convert shorturl to URL
 @app.route("/<string:shorturl>")
