@@ -20,8 +20,8 @@ _usage = '<h1>Welcome to a URLShortener demo </h1>' \
 
 # class URLShortener Definition
 class URLShortener():
-	def __init__(self, ServiceURL='http://localhost/', debug=False):
-		self.ServiceURL = ServiceURL
+	def __init__(self, ServiceHost='http://localhost/', debug=False):
+		self.ServiceHost = ServiceHost
 		self.debug = debug
 		self.ShortURL_dict = {}
 		self.AlnumList = []
@@ -63,7 +63,7 @@ def create():
 	if hostname is None:
 		return '<h1>Please give a url to shorturl, format is<br/> /create?url=http://your_url/</h1>'
 	else:
-		return us.GenShortURL(hostname)
+		return us.ServiceHost + us.GenShortURL(hostname)
 
 # Convert shorturl to URL
 @app.route("/<string:shorturl>")
@@ -95,8 +95,8 @@ def list():
 
 if __name__ == "__main__":
 	print(' * URLShortener Demo start!')
-	us = URLShortener(ServiceURL='http://localhost:5000/', debug=True)
-	# us = URLShortener(ServiceURL='http://localhost:5000/')
+	us = URLShortener(ServiceHost='http://localhost:5000/', debug=True)
+	# us = URLShortener(ServiceHost='http://localhost:5000/')
 
 	# test data
 	us.GenShortURL('https://www.google.com')
